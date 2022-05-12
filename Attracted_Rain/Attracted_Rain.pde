@@ -1,15 +1,28 @@
+// import the library
+import com.hamoid.*;
+
+// create a new VideoExport-object
+VideoExport videoExport;
+
 Drop[] drops = new Drop[500];
 
 void setup() {
   size(1080,720);
   background(20,0,50);
+  frameRate(60);
   
   for (int i=0;i<drops.length;i++){
     drops[i]=new Drop();
   }
+  
+  videoExport = new VideoExport(this, "Attracted Rain.mp4");
+  videoExport.setFrameRate(60); 
+  videoExport.startMovie();
 }
 
 void draw(){
+  videoExport.saveFrame();
+  
   noStroke(); //We draw a circle that will represent where the cursor is
   fill(255,255,155*abs(cos(PI*frameCount/50)),50+50*abs(cos(PI*frameCount/50)));
   ellipse(mouseX,mouseY,width/60,width/60);
@@ -25,7 +38,6 @@ void draw(){
   
 
   for (int i=0;i<drops.length;i++){
-    drops[i].fall();
     drops[i].show();
   }
 }
@@ -42,7 +54,9 @@ class Drop {
   int decel = 0;
   int mouseOff = 0;
   
-  void fall(){
+
+  void show(){
+    
     x+=xvar;
     if (overMyWindow()){xvar+=(mouseX-x)/1000;yvar+=(mouseY-y)/5000;mouseOff=2;decel=100;}
     else{if(decel>0){xvar=xvar*random(0.95,0.99);} decel--;}
@@ -52,9 +66,8 @@ class Drop {
     if (y>height){y=random(-4*height,0);yspeed = 5*pow(dist,3);x = random(0,width);}
     if (x>width){x=0;}
     if (x<0){x=width;}
-  }
-  void show(){
-    stroke(255,255,255-100*abs(cos(PI*(x+y)/200)));
+    
+    stroke(255,255,255-100*abs(xvar));
     strokeWeight(abs(cos(PI*(x+y)/200))*4);
     line(x,y,x+xvar,y+size);
   }
@@ -64,3 +77,10 @@ boolean overMyWindow() {
   if ( (mouseX > width*0.2) && (mouseX <= width*0.8) && (mouseY > height*0.2)  && (mouseY <= height*0.8) )   return true;
   return false;
 }
+
+void keyPressed() { 
+
+  if (keyCode == ESC) {
+    videoExport.endMovie();
+  }
+}    
