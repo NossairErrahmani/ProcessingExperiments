@@ -7,7 +7,7 @@ VideoExport videoExport;
 Drop[] drops = new Drop[500];
 
 void setup() {
-  size(1080,720);
+  size(540,960);
   background(20,0,50);
   frameRate(60);
   
@@ -24,8 +24,8 @@ void draw(){
   videoExport.saveFrame();
   
   noStroke(); //We draw a circle that will represent where the cursor is
-  fill(255,255,155*abs(cos(PI*frameCount/50)),50+50*abs(cos(PI*frameCount/50)));
-  ellipse(mouseX,mouseY,width/60,width/60);
+  fill(255,255,255*abs(cos(PI*frameCount/50)),205+50*abs(cos(PI*frameCount/50)));
+  ellipse(mouseX,mouseY,width/40,width/40);
   
   fill(10,50); //We draw a transparent rectangle at each frame so that over time, older positions are hidden and we have a trail 
   rect(0,0,width,height);

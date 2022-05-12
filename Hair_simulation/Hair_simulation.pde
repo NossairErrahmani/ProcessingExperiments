@@ -34,7 +34,7 @@ void setup() {
 
   videoExport = new VideoExport(this, "Hair simulation.mp4");
   videoExport.setFrameRate(30); 
-  videoExport.startMovie();
+  //videoExport.startMovie();
 }
 
 
