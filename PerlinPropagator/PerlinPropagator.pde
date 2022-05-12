@@ -3,13 +3,14 @@ import com.hamoid.*;
 
 Propagator p1 = new Propagator();
 Propagator p2 = new Propagator();
+Propagator p3 = new Propagator();
 VideoExport videoExport;
 
 
 
 void setup() {
   size(540,960);
-  background(0, 0, 0);
+  background(255, 255, 255);
   frameRate(300);
   
   //The 2 propagators will start at 2 adjacent positions
@@ -17,11 +18,14 @@ void setup() {
   p1.y1=height/2; p1.y2=height/2; 
   p2.x1=width/2+1; p2.x2=width/2+0.1; 
   p2.y1=height/2+1; p2.y2=height/2+0.1; 
+  p3.x1=width/2+2; p3.x2=width/2+0.2; 
+  p3.y1=height/2+2; p3.y2=height/2+2; 
   
-  p1.m=5;p2.m=5;
+  p1.m=10;p2.m=10;p3.m=10;
   
-  p1.r=50;p1.g=255;p1.b=200;
-  p2.r=255;p2.g=10;p2.b=155;
+  p1.r=250;p1.g=250;p1.b=250;
+  p2.r=0;p2.g=150;p2.b=150;
+  p3.r=250;p3.g=50;p3.b=50;
   
   videoExport = new VideoExport(this, "Perlin Propagator.mp4");
   videoExport.setFrameRate(1200);  
@@ -33,12 +37,12 @@ void draw() {
   
   videoExport.saveFrame();
 
-  p1.draw();
   p2.draw();
+  p3.draw();
   
   if (keyPressed == true) {
     if (keyCode == UP) {
-      saveFrame("1.png");
+      saveFrame(random(10)+"  .png");
     }
     if (keyCode == ESC) {
       videoExport.endMovie();
@@ -62,18 +66,18 @@ class Propagator {
   float m;  
 
   void draw() {
-    fill(0, 0, 0, 0.3); //We draw a transparent rectangle at each frame so that over time, older positions are hidden and we have a trail 
+    fill(255, 255, 255, 0.5); //We draw a transparent rectangle at each frame so that over time, older positions are hidden and we have a trail 
     rect(0, 0, width, height); 
     
     //Halo line
-    stroke(r*1.4,g*1.4,b*1.4,4);
-    strokeWeight(25);
+    stroke(r*1.4,g*1.4,b*1.4,1);
+    strokeWeight(20);
     strokeCap(ROUND);
     line(x1,y1,x2,y2);
     
     //Main line
     stroke(r,g,b,60);
-    strokeWeight(5);
+    strokeWeight(2);
     strokeCap(ROUND);
     line(x1,y1,x2,y2);
     
