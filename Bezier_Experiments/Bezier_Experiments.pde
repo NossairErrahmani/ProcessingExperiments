@@ -10,6 +10,7 @@ void draw(){
   fill(50, 50, 50, 30); //We draw a transparent rectangle at each frame so that over time, older positions are hidden and we have a trail 
   rect(0, 0, width, height); 
   
+  //Displaying the chosen x,y
   stroke(255,255,255,10);
   strokeWeight(1);
   line(mouseX,0,mouseX,height);
